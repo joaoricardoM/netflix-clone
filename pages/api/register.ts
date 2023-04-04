@@ -15,12 +15,12 @@ export default async function handler(
 
     const existingUser = await prismadb.user.findUnique({
       where: {
-        email: email,
+        email,
       },
     });
 
     if (existingUser) {
-      return res.status(422).json({ error: "Email token" });
+      return res.status(422).json({ error: "Email taken" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -31,7 +31,7 @@ export default async function handler(
         name,
         hashedPassword,
         image: "",
-        emailVerify: new Date(),
+        emailVerified: new Date(),
       },
     });
 
