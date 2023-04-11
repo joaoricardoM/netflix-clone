@@ -17,11 +17,11 @@ model User {
   email          String?   @unique
   emailVerified  DateTime?
   hashedPassword String?
-  createAt       DateTime  @default(now())
-  updateAt       DateTime  @updatedAt
-  favoriteIds    String[]  @db.ObjectId
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   sessions       Session[]
   accounts       Account[]
+  favoriteIds    String[]  @db.ObjectId
 }
 
 model Account {
@@ -30,12 +30,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.ObjectId
-  access_token      String? @db.ObjectId
-  expire_at         Int?
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?    @map("expire_at")
   token_type        String?
   scope             String?
-  id_token          String? @db.ObjectId
+  id_token          String? @db.String
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -48,8 +48,7 @@ model Session {
   sessionToken String   @unique
   userId       String   @db.ObjectId
   expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -62,10 +61,11 @@ model VerificationToken {
 }
 
 model Movie {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  Description String
-  thumbnail   String
-  genre       String
-  duration    String
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  videoUrl     String
+  thumbnailUrl String
+  genre        String
+  duration     String
 }
