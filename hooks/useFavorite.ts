@@ -12,4 +12,12 @@ const useFavorites = () => {
         revalidateOnFocus: false,
         revalidadeOnReconnect: false,
     });
+    return {
+        data,
+        error,
+        isLoading,
+        mutate,
+    };
 }
+
+export default useFavorites;
