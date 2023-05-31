@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             })
 
-            if (existingMovie) {
+            if (!existingMovie) {
                 throw new Error('Invalid ID')
             }
 
